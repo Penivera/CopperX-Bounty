@@ -2,7 +2,7 @@ import { authApi } from '../api/auth';
 import { AuthResponse, User, KYCStatus } from '../types';
 
 export class AuthService {
-  async requestOTP(email: string): Promise<boolean> {
+  async requestOTP(email: string): Promise<{sid: string}> {
     try {
       return await authApi.requestEmailOTP(email);
     } catch (error) {
@@ -11,9 +11,9 @@ export class AuthService {
     }
   }
   
-  async verifyOTP(email: string, otp: string): Promise<AuthResponse> {
+  async verifyOTP(email: string, otp: string, sid: string): Promise<AuthResponse> {
     try {
-      return await authApi.verifyEmailOTP(email, otp);
+      return await authApi.verifyEmailOTP(email, otp, sid);
     } catch (error) {
       console.error('Error in AuthService.verifyOTP:', error);
       throw error;
