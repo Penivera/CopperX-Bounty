@@ -5,22 +5,34 @@ import { AuthResponse, APIError } from '../types';
 const baseURL = `${config.apiBaseUrl}/api`;
 
 export const authApi = {
-  requestEmailOTP: async (email: string): Promise<boolean> => {
+  requestEmailOTP: async (email: string): Promise<{sid: string}> => {
     try {
       const response = await axios.post(`${baseURL}/auth/email-otp/request`, { email });
-      return true;
+      console.log('OTP request response:', response.data);
+      return response.data;  // Should contain {email, sid}
     } catch (error) {
       console.error('Error requesting OTP:', error);
       throw error;
     }
   },
   
-  verifyEmailOTP: async (email: string, otp: string): Promise<AuthResponse> => {
+  verifyEmailOTP: async (email: string, otp: string, sid: string): Promise<AuthResponse> => {
     try {
-      const response = await axios.post(`${baseURL}/auth/email-otp/authenticate`, { email, otp });
+      console.log(`Attempting to verify OTP for ${email} with code ${otp} and sid ${sid}`);
+      const response = await axios.post(`${baseURL}/auth/email-otp/authenticate`, {
+        email,
+        otp,
+        sid
+      });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      // Enhanced error logging
       console.error('Error verifying OTP:', error);
+      if (error.response) {
+        console.error('Response data:', JSON.stringify(error.response.data, null, 2));
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      }
       throw error;
     }
   },
