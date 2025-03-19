@@ -1,4 +1,4 @@
-import { Context, SessionContext } from 'telegraf';
+import { Context, SessionStore,Telegraf } from 'telegraf';
 
 export interface SessionData {
   authToken?: string;
@@ -8,7 +8,7 @@ export interface SessionData {
   tempData?: {
     recipientEmail?: string;
     recipientWallet?: string;
-    amount?: number;
+    amount?: number; 
     walletAddress?: string;
     bankDetails?: {
       accountNumber?: string;
@@ -24,6 +24,8 @@ export interface CopperXContext extends Context {
   session: SessionData;
 }
 
+export type Bot = Telegraf<CopperXContext>;
+
 export interface User {
   id: string;
   email: string;
@@ -37,6 +39,7 @@ export interface Wallet {
   network: string;
   address: string;
   isDefault: boolean;
+  walletAddress:string;
 }
 
 export interface Balance {

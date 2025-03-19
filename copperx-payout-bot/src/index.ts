@@ -42,5 +42,11 @@ bot.launch()
   });
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGINT', () => {
+  console.log('Stopping Bot');
+  bot.stop('SIGINT');
+});
+process.once('SIGTERM', () => {
+  console.log('Stopping Bot');
+  bot.stop('SIGTERM');
+});

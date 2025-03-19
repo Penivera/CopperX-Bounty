@@ -137,7 +137,7 @@ async function handleDepositCommand(ctx: CopperXContext) {
     
     wallets.forEach(wallet => {
       message += `*${wallet.network}*${wallet.isDefault ? ' (Default)' : ''}\n`;
-      message += `\`${wallet.address}\`\n\n`;
+      message += `\`${wallet.walletAddress}\`\n\n`;
     });
     
     message += '⚠️ *Important*: Only send USDC to these addresses. Sending other tokens may result in loss of funds.\n\n';

@@ -130,6 +130,7 @@ async function handleLoginCommand(ctx: CopperXContext) {
     await ctx.reply(
       'You are already logged in. Use /logout to sign out first.'
     );
+    console.log(ctx.session.authToken)
     return;
   }
 

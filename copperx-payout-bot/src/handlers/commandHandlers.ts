@@ -1,9 +1,9 @@
 import { Markup } from 'telegraf';
-import { CopperXContext } from '../types';
+import { CopperXContext,Bot } from '../types';
 import { WELCOME_MESSAGE, HELP_MESSAGE } from '../config';
 import { authService } from '../services/authService';
 
-export function registerCommandHandlers(bot: any) {
+export function registerCommandHandlers(bot: Bot) {
   // Start command
   bot.command('start', async (ctx: CopperXContext) => {
     await ctx.replyWithMarkdown(
