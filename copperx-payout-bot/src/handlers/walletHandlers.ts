@@ -1,6 +1,7 @@
 import { Markup } from 'telegraf';
 import { CopperXContext } from '../types';
 import { walletService } from '../services/walletService';
+import { getChainName } from '../utils/wallet_utils';
 
 export function registerWalletHandlers(bot: any) {
   // Balance command handler
@@ -136,7 +137,7 @@ async function handleDepositCommand(ctx: CopperXContext) {
     message += 'You can send USDC to any of these addresses:\n\n';
     
     wallets.forEach(wallet => {
-      message += `*${wallet.network}*${wallet.isDefault ? ' (Default)' : ''}\n`;
+      message += `*${getChainName(wallet.network)}*${wallet.isDefault ? ' (Default)' : ''}\n`;
       message += `\`${wallet.walletAddress}\`\n\n`;
     });
     
