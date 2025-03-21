@@ -177,13 +177,13 @@ export function registerTransferHandlers(bot: any) {
     
     try {
       if (type === 'email' && data.recipientEmail && data.amount) {
-        await transferService.sendByEmail(token, data.recipientEmail, data.amount);
+        await transferService.sendByEmail(token, data.recipientEmail, BigInt(data.amount));
         
         await ctx.editMessageText(
           `✅ Successfully sent ${data.amount} USDC to ${data.recipientEmail}!`
         );
       } else if (type === 'wallet' && data.recipientWallet && data.amount) {
-        await transferService.sendToWallet(token, data.recipientWallet, data.amount, data.currency);
+        await transferService.sendToWallet(token, data.recipientWallet, BigInt(data.amount), data.currency);
         
         await ctx.editMessageText(
           `✅ Successfully sent ${data.amount} USDC to ${walletService.formatAddress(data.recipientWallet)}!`
