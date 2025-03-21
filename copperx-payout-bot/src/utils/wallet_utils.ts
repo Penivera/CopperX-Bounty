@@ -10,3 +10,8 @@ export const chainIdToName: Record<string, string> = {
 export const getChainName = (chainId: string): string => {
     return chainIdToName[chainId] || "Unknown Chain";
   };
+
+
+
+
+  

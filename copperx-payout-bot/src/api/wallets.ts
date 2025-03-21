@@ -12,6 +12,7 @@ export const walletApi = {
           Authorization: `Bearer ${token}`
         }
       });
+      //console.log(response.data.walletAddress);
       return response.data;
     } catch (error) {
       console.error('Error fetching wallets:', error);

@@ -79,3 +79,61 @@ export enum TransactionStatus {
   COMPLETED = 'completed',
   FAILED = 'failed'
 }
+
+export enum Currency {
+  USD = "USD",
+  INR = "INR",
+  AED = "AED",
+  IDR = "IDR",
+  PKR = "PKR",
+  SGD = "SGD",
+  EUR = "EUR",
+  MYR = "MYR",
+  CAD = "CAD",
+  KYO = "KYO",
+  LBP = "LBP",
+  TRY = "TRY",
+  XCD = "XCD",
+  VND = "VND",
+  THB = "THB",
+  HKD = "HKD",
+  BDT = "BDT",
+  PHP = "PHP",
+  KHR = "KHR",
+  AUD = "AUD",
+  GBP = "GBP",
+  NPR = "NPR",
+  LKR = "LKR",
+  XOF = "XOF",
+  XAF = "XAF",
+  GHS = "GHS",
+  KES = "KES",
+  MZN = "MZN",
+  TZS = "TZS",
+  UGX = "UGX",
+  NZD = "NZD",
+  KMW = "KMW",
+  MMK = "MMK",
+  JPY = "JPY",
+  BRL = "BRL",
+  CNY = "CNY",
+  USDC = "USDC",
+  USDT = "USDT",
+  DAI = "DAI",
+  ETH = "ETH",
+  USDCE = "USDCE",
+  STRK = "STRK"
+}
+
+
+export enum PurposeCode {
+  SELF = "self",
+  SALARY = "salary",
+  GIFT = "gift",
+  INCOME = "income",
+  SAVING = "saving",
+  EDUCATION_SUPPORT = "education_support",
+  FAMILY = "family",
+  HOME_IMPROVEMENT = "home_improvement",
+  REIMBURSEMENT = "reimbursement"
+}

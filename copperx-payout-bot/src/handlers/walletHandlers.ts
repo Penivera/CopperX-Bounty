@@ -74,7 +74,7 @@ async function handleBalanceCommand(ctx: CopperXContext) {
       message += '_No balances found. Deposit funds to get started._\n\n';
     } else {
       balances.forEach(balance => {
-        message += `*${balance.network}*: ${walletService.formatBalance(balance.balance)} USDC\n`;
+        message += `*${getChainName(balance.network)}*: ${walletService.formatBalance(balance.balance)} USDC\n`;
       });
       message += '\n';
     }
@@ -82,7 +82,7 @@ async function handleBalanceCommand(ctx: CopperXContext) {
     // Display default wallet
     if (defaultWallet) {
       message += '✅ *Default Wallet*\n';
-      message += `Network: ${defaultWallet.network}\n`;
+      message += `Network: ${getChainName(defaultWallet.network)}\n`;
       message += `Address: \`${walletService.formatAddress(defaultWallet.address, false)}\`\n\n`;
     } else {
       message += '⚠️ *No default wallet set*\n\n';
@@ -93,7 +93,7 @@ async function handleBalanceCommand(ctx: CopperXContext) {
     // Create buttons for setting default wallet
     const buttons = wallets.map(wallet => {
       const label = wallet.isDefault 
-        ? `✅ ${wallet.network} (Current)` 
+        ? `✅ ${getChainName(wallet.network)} (Current)` 
         : `Set ${wallet.network} as Default`;
       
       return Markup.button.callback(
@@ -137,7 +137,7 @@ async function handleDepositCommand(ctx: CopperXContext) {
     message += 'You can send USDC to any of these addresses:\n\n';
     
     wallets.forEach(wallet => {
-      message += `*${getChainName(wallet.network)}*${wallet.isDefault ? ' (Default)' : ''}\n`;
+      message += `*${getChainName(getChainName(wallet.network))}*${wallet.isDefault ? ' (Default)' : ''}\n`;
       message += `\`${wallet.walletAddress}\`\n\n`;
     });
     

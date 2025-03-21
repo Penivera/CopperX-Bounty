@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { config } from '../config';
-import { Transfer, APIError } from '../types';
-
+import { Transfer, APIError,Currency,PurposeCode } from '../types';
+ 
 const baseURL = `${config.apiBaseUrl}/api`;
 
 export const transferApi = {
-  sendByEmail: async (token: string, email: string, amount: number): Promise<any> => {
+  sendByEmail: async (token: string, email: string, amount: BigInt,currency?:Currency): Promise<any> => {
     try {
       const response = await axios.post(
         `${baseURL}/transfers/send`,
         {
-          receiverEmail: email,
-          amount: amount
+          email: email,
+          amount: amount.toString(),
+          purposeCode: PurposeCode.SELF,
+          currency: currency || Currency.USDC
         },
         {
           headers: {
@@ -26,14 +28,15 @@ export const transferApi = {
     }
   },
   
-  sendToWallet: async (token: string, address: string, amount: number, network?: string): Promise<any> => {
+  sendToWallet: async (token: string, address: string, amount: BigInt, currency?: Currency,purpose?:PurposeCode): Promise<any> => {
     try {
       const response = await axios.post(
         `${baseURL}/transfers/wallet-withdraw`,
         {
-          destinationAddress: address,
-          amount: amount,
-          network: network || 'solana' // Default to Solana if not specified
+          walletAddress: address,
+          amount: amount.toString(), //NOTE Use bigint
+          purposeCode:purpose || PurposeCode.SELF,
+          currency: currency || Currency.USDC
         },
         {
           headers: {

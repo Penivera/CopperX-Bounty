@@ -1,8 +1,9 @@
 import { transferApi } from '../api/transfers';
 import { Transfer } from '../types';
+import { Currency } from '../types/index';
 
 export class TransferService {
-  async sendByEmail(token: string, email: string, amount: number): Promise<any> {
+  async sendByEmail(token: string, email: string, amount: BigInt): Promise<any> {
     try {
       return await transferApi.sendByEmail(token, email, amount);
     } catch (error) {
@@ -11,9 +12,9 @@ export class TransferService {
     }
   }
   
-  async sendToWallet(token: string, address: string, amount: number, network?: string): Promise<any> {
+  async sendToWallet(token: string, address: string, amount: BigInt, currency?: Currency): Promise<any> {
     try {
-      return await transferApi.sendToWallet(token, address, amount, network);
+      return await transferApi.sendToWallet(token, address, amount, currency);
     } catch (error) {
       console.error('Error in TransferService.sendToWallet:', error);
       throw error;

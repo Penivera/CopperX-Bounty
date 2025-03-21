@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf';
-import { CopperXContext } from '../types';
+import { CopperXContext,Currency } from '../types';
 import { transferService } from '../services/transferService';
 import { walletService } from '../services/walletService';
 
@@ -11,7 +11,7 @@ const usersInTransferFlow: Record<number, {
     recipientEmail?: string;
     recipientWallet?: string;
     amount?: number;
-    network?: string;
+    currency?: Currency;
   };
 }> = {};
 
@@ -97,7 +97,7 @@ export function registerTransferHandlers(bot: any) {
     );
   });
 
-  // Handle wallet address input for transfers
+  //NOTE Handle wallet address input for transfers
   bot.hears(/^[a-zA-Z0-9]{32,}$/, async (ctx: CopperXContext) => {
     const userId = ctx.from?.id;
     if (!userId || !usersInTransferFlow[userId] || 
@@ -183,7 +183,7 @@ export function registerTransferHandlers(bot: any) {
           `✅ Successfully sent ${data.amount} USDC to ${data.recipientEmail}!`
         );
       } else if (type === 'wallet' && data.recipientWallet && data.amount) {
-        await transferService.sendToWallet(token, data.recipientWallet, data.amount, data.network);
+        await transferService.sendToWallet(token, data.recipientWallet, data.amount, data.currency);
         
         await ctx.editMessageText(
           `✅ Successfully sent ${data.amount} USDC to ${walletService.formatAddress(data.recipientWallet)}!`
