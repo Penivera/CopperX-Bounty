@@ -4,6 +4,9 @@ dotenv.config();
 export const config = {
   botToken: process.env.BOT_TOKEN || '',
   apiBaseUrl: process.env.API_BASE_URL || 'https://income-api.copperx.io',
+  webhookUrl: process.env.WEBHOOK_URL || 'https://your-webhook-url.com',
+  webhookPort: parseInt(process.env.WEBHOOK_PORT || '3000', 10),
+  // Keep pusher config for backward compatibility
   pusher: {
     key: process.env.PUSHER_KEY || 'e089376087cac1a62785',
     cluster: process.env.PUSHER_CLUSTER || 'ap1',
