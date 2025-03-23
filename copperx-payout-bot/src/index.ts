@@ -3,6 +3,7 @@ import { config } from './config';
 import { CopperXContext, SessionData } from './types';
 import { errorHandler } from './middlewares/errorHandler';
 import { authMiddleware } from './middlewares/authMiddleware';
+import { webhookService } from './api/webhooks';
 
 // Import handlers
 import { registerAuthHandlers } from './handlers/authHandlers';
@@ -32,10 +33,14 @@ registerAuthHandlers(bot);
 registerWalletHandlers(bot);
 registerTransferHandlers(bot);
 
-// Start the bot
+// Start the bot and webhook server
 bot.launch()
   .then(() => {
     console.log('CopperX Payout Bot started successfully!');
+    
+    // Start the webhook service
+    webhookService.start();
+    console.log('Webhook server started successfully!');
   })
   .catch((err) => {
     console.error('Failed to start bot:', err);
