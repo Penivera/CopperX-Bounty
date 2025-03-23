@@ -1,18 +1,18 @@
 import axios from 'axios';
 import { config } from '../config';
-import { Transfer, APIError,Currency,PurposeCode } from '../types';
+import { Transfer, APIError, Currency, PurposeCode } from '../types';
  
 const baseURL = `${config.apiBaseUrl}/api`;
 
 export const transferApi = {
-  sendByEmail: async (token: string, email: string, amount: BigInt,currency?:Currency): Promise<any> => {
+  sendByEmail: async (token: string, email: string, amount: BigInt, currency?: Currency): Promise<any> => {
     try {
       const response = await axios.post(
         `${baseURL}/transfers/send`,
         {
           email: email,
-          amount: amount.toString(),
-          purposeCode: PurposeCode.SELF,
+          amount: amount.toString(), // Convert BigInt to string
+          purposeCode: PurposeCode.SALARY, // Default to SALARY as requested
           currency: currency || Currency.USDC
         },
         {
@@ -28,14 +28,14 @@ export const transferApi = {
     }
   },
   
-  sendToWallet: async (token: string, address: string, amount: BigInt, currency?: Currency,purpose?:PurposeCode): Promise<any> => {
+  sendToWallet: async (token: string, address: string, amount: BigInt, currency?: Currency, purpose?: PurposeCode): Promise<any> => {
     try {
       const response = await axios.post(
         `${baseURL}/transfers/wallet-withdraw`,
         {
           walletAddress: address,
-          amount: amount.toString(), //NOTE Use bigint
-          purposeCode:purpose || PurposeCode.SELF,
+          amount: amount.toString(), // Convert BigInt to string
+          purposeCode: purpose || PurposeCode.SALARY, // Default to SALARY as requested
           currency: currency || Currency.USDC
         },
         {
