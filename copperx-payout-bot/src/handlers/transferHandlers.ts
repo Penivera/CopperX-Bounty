@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf';
-import { CopperXContext,Currency } from '../types';
+import { CopperXContext, Currency, PurposeCode } from '../types';
 import { transferService } from '../services/transferService';
 import { walletService } from '../services/walletService';
 
@@ -136,7 +136,7 @@ export function registerTransferHandlers(bot: any) {
     
     // Create confirmation message
     let confirmMessage = '🔍 *Please confirm this transaction:*\n\n';
-    confirmMessage += `Amount: ${amount} USDC\n`;
+    confirmMessage += `Amount: ${amount} USDC (${Math.round(amount * 100000000)} units)\n`;
     
     if (usersInTransferFlow[userId].type === 'email') {
       confirmMessage += `To: ${usersInTransferFlow[userId].data.recipientEmail}\n`;
@@ -177,22 +177,29 @@ export function registerTransferHandlers(bot: any) {
     
     try {
       if (type === 'email' && data.recipientEmail && data.amount) {
-        await transferService.sendByEmail(token, data.recipientEmail, BigInt(data.amount));
+        await transferService.sendByEmail(token, data.recipientEmail, data.amount, data.currency);
         
         await ctx.editMessageText(
-          `✅ Successfully sent ${data.amount} USDC to ${data.recipientEmail}!`
+          `✅ Successfully sent ${data.amount} USDC (${Math.round(data.amount * 100000000)} units) to ${data.recipientEmail}!`
         );
       } else if (type === 'wallet' && data.recipientWallet && data.amount) {
-        await transferService.sendToWallet(token, data.recipientWallet, BigInt(data.amount), data.currency);
+        await transferService.sendToWallet(token, data.recipientWallet, data.amount, data.currency, PurposeCode.SALARY);
         
         await ctx.editMessageText(
-          `✅ Successfully sent ${data.amount} USDC to ${walletService.formatAddress(data.recipientWallet)}!`
+          `✅ Successfully sent ${data.amount} USDC (${Math.round(data.amount * 100000000)} units) to ${walletService.formatAddress(data.recipientWallet)}!`
         );
       } else {
         await ctx.editMessageText('❌ Invalid transfer data. Please try again.');
       }
-    } catch (error) {
-      await ctx.editMessageText('❌ Transfer failed. Please check your balance and try again later.');
+    } catch (error: any) {
+      console.error('Transfer error:', error);
+      let errorMessage = 'Transfer failed. Please check your balance and try again.';
+      
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = `Transfer failed: ${error.response.data.message}`;
+      }
+      
+      await ctx.editMessageText(`❌ ${errorMessage}`);
     } finally {
       // Clean up flow state
       delete usersInTransferFlow[userId];
