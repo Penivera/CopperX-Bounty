@@ -1,20 +1,23 @@
 import { transferApi } from '../api/transfers';
-import { Transfer } from '../types';
-import { Currency } from '../types/index';
+import { Transfer, Currency, PurposeCode } from '../types';
 
 export class TransferService {
-  async sendByEmail(token: string, email: string, amount: BigInt): Promise<any> {
+  async sendByEmail(token: string, email: string, amount: number, currency?: Currency): Promise<any> {
     try {
-      return await transferApi.sendByEmail(token, email, amount);
+      // Convert amount to smallest unit (8 decimals)
+      const amountInSmallestUnit = BigInt(Math.round(amount * 100000000));
+      return await transferApi.sendByEmail(token, email, amountInSmallestUnit, currency);
     } catch (error) {
       console.error('Error in TransferService.sendByEmail:', error);
       throw error;
     }
   }
   
-  async sendToWallet(token: string, address: string, amount: BigInt, currency?: Currency): Promise<any> {
+  async sendToWallet(token: string, address: string, amount: number, currency?: Currency, purpose?: PurposeCode): Promise<any> {
     try {
-      return await transferApi.sendToWallet(token, address, amount, currency);
+      // Convert amount to smallest unit (8 decimals)
+      const amountInSmallestUnit = BigInt(Math.round(amount * 100000000));
+      return await transferApi.sendToWallet(token, address, amountInSmallestUnit, currency, purpose || PurposeCode.SALARY);
     } catch (error) {
       console.error('Error in TransferService.sendToWallet:', error);
       throw error;
@@ -48,6 +51,10 @@ export class TransferService {
       hour: '2-digit',
       minute: '2-digit'
     });
+  }
+
+  formatAmount(amount: number): string {
+    return `$${amount.toFixed(2)} (${(amount * 100000000).toFixed(0)} units)`;
   }
 }
 
