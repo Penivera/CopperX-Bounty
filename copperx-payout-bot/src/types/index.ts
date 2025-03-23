@@ -125,7 +125,6 @@ export enum Currency {
   STRK = "STRK"
 }
 
-
 export enum PurposeCode {
   SELF = "self",
   SALARY = "salary",
@@ -137,3 +136,5 @@ export enum PurposeCode {
   HOME_IMPROVEMENT = "home_improvement",
   REIMBURSEMENT = "reimbursement"
 }
+
+export type WebhookEventHandler = (event: any) => void;
