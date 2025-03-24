@@ -45,6 +45,7 @@ The CopperX Telegram Bot is a secure and efficient financial assistant that enab
 git clone https://github.com/your-repo/copperx-telegram-bot.git
 cd copperx-telegram-bot
 npm install
+```
 
 🛠 Configuration
 
