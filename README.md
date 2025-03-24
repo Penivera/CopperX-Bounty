@@ -42,7 +42,7 @@ The CopperX Telegram Bot is a secure and efficient financial assistant that enab
 
 ### **💾 Installation**  
 ```bash
-git clone https://github.com/your-repo/copperx-telegram-bot.git
+git clone https://github.com/Penivera/CopperX-Bounty.git
 cd copperx-telegram-bot
 npm install
 ```
@@ -141,17 +141,6 @@ If you’d like to contribute, feel free to fork the repo and submit a pull requ
 GitHub Repo: https://github.com/Penivera/CopperX-Bounty
 
 
----
 
-🚀 Ready to get started? Click here to use the bot!
-
-This **README.md** is **well-structured**, **professional**, and **optimized for contests**. It includes:  
-✅ **Engaging introduction**  
-✅ **Clear setup instructions**  
-✅ **Comprehensive API documentation**  
-✅ **Security best practices**  
-✅ **FAQ & troubleshooting**  
-✅ **Call-to-action**  
-
-This will make your bot **stand out** in the contest. Let me know if you need any modifications!
+🚀 Ready to get started? Click here https://t.me/CopperX_Bounty_bot to use the bot!
 
