@@ -1,4 +1,4 @@
-import { Context, SessionStore,Telegraf } from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 
 export interface SessionData {
   authToken?: string;
@@ -20,8 +20,18 @@ export interface SessionData {
   };
 }
 
+// Properly extend Context type to include all Telegraf methods and properties
 export interface CopperXContext extends Context {
   session: SessionData;
+  // The following would be added by Telegraf but TypeScript doesn't see them
+  reply: Context['reply'];
+  replyWithMarkdown: Context['replyWithMarkdown'];
+  from: Context['from'];
+  message: Context['message'];
+  answerCbQuery: Context['answerCbQuery'];
+  editMessageText: Context['editMessageText'];
+  callbackQuery: Context['callbackQuery'];
+  telegram: Context['telegram'];
 }
 
 export type Bot = Telegraf<CopperXContext>;
